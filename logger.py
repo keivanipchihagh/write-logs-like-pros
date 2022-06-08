@@ -32,10 +32,12 @@ def logger(func, on_success = None, on_failure = None):
 
     def run(*args, **kwargs):
         try:
-            func(*args, **kwargs)
+            _return = func(*args, **kwargs)
             
-            if on_success:
-                _logger.info(on_success)
+            if on_success: _logger.info(on_success)
+
+            if _return:
+                return _return
 
         except Exception as ex:
             if on_failure:
