@@ -36,7 +36,7 @@ def logger(func, on_success = None, on_failure = None):
             
             if on_success: _logger.info(on_success)
 
-            if _return:
+            if _return is not None:
                 return _return
 
         except Exception as ex:
