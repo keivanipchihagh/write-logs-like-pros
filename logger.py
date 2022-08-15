@@ -1,11 +1,17 @@
+import os
 import logging
+import time
+
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
 
 # Create the logging module
 logging.basicConfig(
-    format = '%(asctime)s - %(levelname)s - %(message)s',       # Format of the log
-    datefmt = '%m/%d/%Y %I:%M:%S %p',                           # The format of the date
-    filename = 'logs.log',                                      # The name of the file
-    level = logging.DEBUG                                       # The minimum level of the log
+    format = '%(asctime)s - %(levelname)s - %(message)s',
+    datefmt = '%m/%d/%Y %I:%M:%S %p',
+    filename = f'{os.getcwd()}/logs/{time.strftime("%Y-%m-%d_%H-%M-%S")}.log',
+    level = logging.INFO
 )
 _logger = logging.getLogger(__name__)
 
