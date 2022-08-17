@@ -2,6 +2,7 @@ import os
 import logging
 import time
 
+
 if not os.path.exists('logs'):
     os.makedirs('logs')
 
@@ -27,28 +28,32 @@ def parametrized(dec):
 
 # A logger decorator
 @parametrized
-def logger(func, on_success = None, on_failure = None):
-    '''
-    A decorator that logs the running of a function.
+def logger(func, on_failure: str = None, on_success: str = None, raise_err: bool = True):
+    """
+        A decorator that logs the function's execution status onto a file
 
-    Parameters:
-        on_success (function): A function to be called when the function is successful.
-        on_failure (function): A function to be called when the function fails.
-    '''
+        parameters:
+            func: The function to be logged.
+            on_failure (str): Failure message if the function fails. If None, the message will be the actual error message.
+            on_success (str): Success message if the function executes successfully. (optional)
+            raise_err (bool): Whether to raise an error if the function fails. It doesn't effect the 'on_failure' parameters behavior. (default: True)
+    """
 
     def run(*args, **kwargs):
         try:
-            _return = func(*args, **kwargs)
+            result = func(*args, **kwargs)
+
+            if on_success:
+                _logger.info(on_success)
             
-            if on_success: _logger.info(on_success)
+            # Return the return value of the function
+            return None if result is None else result
 
-            if _return is not None:
-                return _return
+        except Exception as ex:            
+            _logger.error(on_failure if on_failure else ex)
 
-        except Exception as ex:
-            if on_failure:
-                _logger.error(on_failure)
-            else:
-                _logger.error(ex)
+            # Raise exception if raise_err is True
+            if raise_err:
+                raise ex
 
     return run
