@@ -13,7 +13,7 @@ logging.basicConfig(
     datefmt = '%m/%d/%Y %I:%M:%S %p',
     filename = f'{os.getcwd()}/logs/{time.strftime("%Y-%m-%d_%H-%M-%S")}.log',
     level = logging.INFO,
-    write = "w"
+    filemode = "w"
 )
 _logger = logging.getLogger(__name__)
 
