@@ -12,7 +12,8 @@ logging.basicConfig(
     format = '%(asctime)s - %(levelname)s - %(message)s',
     datefmt = '%m/%d/%Y %I:%M:%S %p',
     filename = f'{os.getcwd()}/logs/{time.strftime("%Y-%m-%d_%H-%M-%S")}.log',
-    level = logging.INFO
+    level = logging.INFO,
+    write = "w"
 )
 _logger = logging.getLogger(__name__)
 
